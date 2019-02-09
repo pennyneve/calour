@@ -129,6 +129,7 @@ def dsfdr(data, labels, transform_type='rankdata', method='meandiff',
         the method to use for calculating test statistics:
         'meandiff' : mean(A)-mean(B) (binary)
         'mannwhitney' : mann-whitney u-test (binary)
+        'pairedwilcox': wilcoxon ranktest (paired)
         'kruwallis' : kruskal-wallis test (multiple groups)
         'stdmeandiff' : (mean(A)-mean(B))/(std(A)+std(B)) (binary)
         'spearman' : spearman correlation (numeric)
@@ -222,13 +223,15 @@ def dsfdr(data, labels, transform_type='rankdata', method='meandiff',
         u = np.abs(mean1 - mean2)
 
     elif method == 'mannwhitney' or method == \
-                   'kruwallis' or method == 'stdmeandiff':
+                   'kruwallis' or method == 'stdmeandiff' or method =='pairedwilcox':
         if method == 'mannwhitney':
             method = mannwhitney
         if method == 'kruwallis':
             method = kruwallis
         if method == 'stdmeandiff':
             method = stdmeandiff
+        if method == 'pairedwilcox':
+            method = 'pairedwilcox'
 
         tstat = method(data, labels)
         t = np.abs(tstat)
